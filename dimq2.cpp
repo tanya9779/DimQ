@@ -8,12 +8,12 @@ class DimQ
     DimQ():value(0) {}
     DimQ(double v):value(v) {}
 
-	// оператор Унарный минус
+	// РѕРїРµСЂР°С‚РѕСЂ РЈРЅР°СЂРЅС‹Р№ РјРёРЅСѓСЃ
 	DimQ& operator-() {
 		DimQ * ret = new DimQ(-value);
 		return *ret;
 	}
-    // операторы сложения и вычитания только для одинаковых размерностей
+    // РѕРїРµСЂР°С‚РѕСЂС‹ СЃР»РѕР¶РµРЅРёСЏ Рё РІС‹С‡РёС‚Р°РЅРёСЏ С‚РѕР»СЊРєРѕ РґР»СЏ РѕРґРёРЅР°РєРѕРІС‹С… СЂР°Р·РјРµСЂРЅРѕСЃС‚РµР№
     DimQ& operator+(DimQ other) {
         DimQ * ret = new DimQ(value+other.value);
     	return *ret;
@@ -22,30 +22,30 @@ class DimQ
         DimQ * ret = new DimQ(value-other.value);
     	return *ret;
 	}
-    // Операторы умножения и деления вынесены за описание класса.
+    // РћРїРµСЂР°С‚РѕСЂС‹ СѓРјРЅРѕР¶РµРЅРёСЏ Рё РґРµР»РµРЅРёСЏ РІС‹РЅРµСЃРµРЅС‹ Р·Р° РѕРїРёСЃР°РЅРёРµ РєР»Р°СЃСЃР°.
 };
-// Операторы умножения и деления вынесены за описание класса. Два набора размерностей для разных аргументов
-// умножение
+// РћРїРµСЂР°С‚РѕСЂС‹ СѓРјРЅРѕР¶РµРЅРёСЏ Рё РґРµР»РµРЅРёСЏ РІС‹РЅРµСЃРµРЅС‹ Р·Р° РѕРїРёСЃР°РЅРёРµ РєР»Р°СЃСЃР°. Р”РІР° РЅР°Р±РѕСЂР° СЂР°Р·РјРµСЂРЅРѕСЃС‚РµР№ РґР»СЏ СЂР°Р·РЅС‹С… Р°СЂРіСѓРјРµРЅС‚РѕРІ
+// СѓРјРЅРѕР¶РµРЅРёРµ
 template<int L, int M, int T, int I, int Q, int N, int J, int oL, int oM, int oT, int oI, int oQ, int oN, int oJ>
 DimQ<L+oL,M+oM,T+oT,I+oI,Q+oQ,N+oN,J+oJ>& operator*(DimQ<L,M,T,I,Q,N,J> nom, DimQ<oL,oM,oT,oI,oQ,oN,oJ> denom) {
-	// размерности нужно сложить
+	// СЂР°Р·РјРµСЂРЅРѕСЃС‚Рё РЅСѓР¶РЅРѕ СЃР»РѕР¶РёС‚СЊ
 	DimQ<L+oL,M+oM,T+oT,I+oI,Q+oQ,N+oN,J+oJ> * new_type = new DimQ<L+oL,M+oM,T+oT,I+oI,Q+oQ,N+oN,J+oJ>(nom.value*denom.value);
 	return *new_type;
 }
-// деление
+// РґРµР»РµРЅРёРµ
 template<int L, int M, int T, int I, int Q, int N, int J, int oL, int oM, int oT, int oI, int oQ, int oN, int oJ>
 DimQ<L-oL,M-oM,T-oT,I-oI,Q-oQ,N-oN,J-oJ>& operator/(DimQ<L,M,T,I,Q,N,J> nom, DimQ<oL,oM,oT,oI,oQ,oN,oJ> denom) {
-	// размерности нужно вычесть
+	// СЂР°Р·РјРµСЂРЅРѕСЃС‚Рё РЅСѓР¶РЅРѕ РІС‹С‡РµСЃС‚СЊ
 	DimQ<L-oL,M-oM,T-oT,I-oI,Q-oQ,N-oN,J-oJ> * new_type = new DimQ<L-oL,M-oM,T-oT,I-oI,Q-oQ,N-oN,J-oJ>(nom.value/denom.value);
 	return *new_type;
 }
 
-// вывод в поток с размерностью
+// РІС‹РІРѕРґ РІ РїРѕС‚РѕРє СЃ СЂР°Р·РјРµСЂРЅРѕСЃС‚СЊСЋ
 template<int L, int M, int T, int I, int Q, int N, int J>
 std::ostream& operator<<(std::ostream& out, const DimQ<L,M,T,I,Q,N,J>& dimq)
 {
-	std::string str = " "; // здесь формируется размерность
-	// для типов скорость, ускорение и ньютон сделаем красивый вывод
+	std::string str = " "; // Р·РґРµСЃСЊ С„РѕСЂРјРёСЂСѓРµС‚СЃСЏ СЂР°Р·РјРµСЂРЅРѕСЃС‚СЊ
+	// РґР»СЏ С‚РёРїРѕРІ СЃРєРѕСЂРѕСЃС‚СЊ, СѓСЃРєРѕСЂРµРЅРёРµ Рё РЅСЊСЋС‚РѕРЅ СЃРґРµР»Р°РµРј РєСЂР°СЃРёРІС‹Р№ РІС‹РІРѕРґ
 	if (L==1 && M==0 && T==-1 && I==0 && Q==0 && N==0 && J==0)
         return out << dimq.value << " m/s" ;
 	
@@ -55,36 +55,36 @@ std::ostream& operator<<(std::ostream& out, const DimQ<L,M,T,I,Q,N,J>& dimq)
 	if (L==1 && M==1 && T==-2 && I==0 && Q==0 && N==0 && J==0)
         return out << dimq.value << " kg*m/s^2"; //Newton
 	
-	if (L!=0) { // метр
+	if (L!=0) { // РјРµС‚СЂ
 		str += "m";
 		if (L!=1) str += "^(" + std::to_string(L) + ")";
 	}
-	if (M!=0) { // килограмм
-        if ( str.length()>0 ) str+="*"; // если не пусто, то знак умножения допишем
+	if (M!=0) { // РєРёР»РѕРіСЂР°РјРј
+        if ( str.length()>0 ) str+="*"; // РµСЃР»Рё РЅРµ РїСѓСЃС‚Рѕ, С‚Рѕ Р·РЅР°Рє СѓРјРЅРѕР¶РµРЅРёСЏ РґРѕРїРёС€РµРј
 		str += "kg";
-		if (M!=1) str += "^(" + std::to_string(M) + ")"; // степени отличные от первой выведем
+		if (M!=1) str += "^(" + std::to_string(M) + ")"; // СЃС‚РµРїРµРЅРё РѕС‚Р»РёС‡РЅС‹Рµ РѕС‚ РїРµСЂРІРѕР№ РІС‹РІРµРґРµРј
 	}
-	if (T!=0) { // секунда
+	if (T!=0) { // СЃРµРєСѓРЅРґР°
         if ( str.length()>0 ) str+="*";
 		str += "s";
 		if (T!=1) str += "^("  + std::to_string(T) + ")";
 	}
-	if (I!=0) { // ампер
+	if (I!=0) { // Р°РјРїРµСЂ
         if ( str.length()>0 ) str+="*";
 		str += "A";
 		if (I!=1) str += "^(" + std::to_string(I) + ")";
 	}
-	if (Q!=0) { // кельвин
+	if (Q!=0) { // РєРµР»СЊРІРёРЅ
         if ( str.length()>0 ) str+="*";
 		str += "K";
 		if (Q!=1) str += "^(" + std::to_string(Q) + ")";
 	}
-	if (N!=0) { // моль
+	if (N!=0) { // РјРѕР»СЊ
         if ( str.length()>0 ) str+="*";
 		str += "mol";
 		if (N!=1) str += "^(" + std::to_string(N) + ")";
 	}
-	if (J!=0) { // кандела
+	if (J!=0) { // РєР°РЅРґРµР»Р°
         if ( str.length()>0 ) str+="*";
 		str += "cd";
 		if (J!=1) str += "^(" + std::to_string(J) + ")";
@@ -92,40 +92,40 @@ std::ostream& operator<<(std::ostream& out, const DimQ<L,M,T,I,Q,N,J>& dimq)
     return out << dimq.value <<  str ;
 }
 
-typedef DimQ<1, 0, 0, 0, 0, 0, 0> Length; // введем базовые типы
+typedef DimQ<1, 0, 0, 0, 0, 0, 0> Length; // РІРІРµРґРµРј Р±Р°Р·РѕРІС‹Рµ С‚РёРїС‹
 typedef DimQ<0, 1, 0, 0, 0, 0, 0> Mass;
 typedef DimQ<0, 0, 1, 0, 0, 0, 0> Time;
-typedef DimQ<0, 0, 0, 1, 0, 0, 0> Current; // Ампер
+typedef DimQ<0, 0, 0, 1, 0, 0, 0> Current; // РђРјРїРµСЂ
 typedef DimQ<0, 0, 0, 0, 1, 0, 0> Temperature;
 typedef DimQ<0, 0, 0, 0, 0, 1, 0> Mole;
 typedef DimQ<0, 0, 0, 0, 0, 0, 1> Candela;
 
-typedef DimQ<1, 0, -1, 0, 0, 0, 0> Velocity ; // тип Скорость m/s
-typedef DimQ<1, 0, -2, 0, 0, 0, 0> Acceleration; // тип Ускорение m/s^2
-typedef DimQ<0, 0, 0, 0, 0, 0, 0> Dimensionless; // Безразмерный тип
+typedef DimQ<1, 0, -1, 0, 0, 0, 0> Velocity ; // С‚РёРї РЎРєРѕСЂРѕСЃС‚СЊ m/s
+typedef DimQ<1, 0, -2, 0, 0, 0, 0> Acceleration; // С‚РёРї РЈСЃРєРѕСЂРµРЅРёРµ m/s^2
+typedef DimQ<0, 0, 0, 0, 0, 0, 0> Dimensionless; // Р‘РµР·СЂР°Р·РјРµСЂРЅС‹Р№ С‚РёРї
 
 
 int main() 
 {
     
-    Length l = {100}; // Длина
-    Time t = {20}; // Время  
-	// l2 = l+t; // дает ошибку как и положено
+    Length l = {100}; // Р”Р»РёРЅР°
+    Time t = {20}; // Р’СЂРµРјСЏ  
+	// l2 = l+t; // РґР°РµС‚ РѕС€РёР±РєСѓ РєР°Рє Рё РїРѕР»РѕР¶РµРЅРѕ
 
-	Velocity v = l/t; // скорость 
+	Velocity v = l/t; // СЃРєРѕСЂРѕСЃС‚СЊ 
 	std::cout << v << "\n";
 
-	Acceleration a = v/t; // ускорение
+	Acceleration a = v/t; // СѓСЃРєРѕСЂРµРЅРёРµ
 	std::cout << a << "\n";
 	
-	// тип переменной на усмотрение компилятора
+	// С‚РёРї РїРµСЂРµРјРµРЅРЅРѕР№ РЅР° СѓСЃРјРѕС‚СЂРµРЅРёРµ РєРѕРјРїРёР»СЏС‚РѕСЂР°
 	auto smth = v*a*a/t;
 	std::cout << smth << "\n";
 	 
-	auto dimensionless = v/v; // безразмерная величина
+	auto dimensionless = v/v; // Р±РµР·СЂР°Р·РјРµСЂРЅР°СЏ РІРµР»РёС‡РёРЅР°
 	std::cout << dimensionless << "\n";
 	
-	// Ошибка компиляции!
+	// РћС€РёР±РєР° РєРѕРјРїРёР»СЏС†РёРё!
 	// Dimensionless d = v;
 	// Mass m = v;
 	// Amount a = d;
